@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+struct soccerplayers {
+	char *familyname;
+	int age;
+	int numberofgames;
+	int numberofgoals;
+};
+
+void generateName(char *name, int length);
+void printInfo(soccerplayers *s, int i);
+
+int main(int argc, char** argv) {
+	srand(time(NULL));
+	
+	int Numberofsoccerplayers = 20 + rand()%20;
+	
+	soccerplayers *s = (soccerplayers *)malloc(Numberofsoccerplayers*sizeof(soccerplayers));
+
+	for (int i = 0; i < Numberofsoccerplayers; i++)
+    {
+    	(s + i)->age = 20 + rand()%20;
+		
+		(s + i)->numberofgames = rand()%21;
+		
+		(s + i)->numberofgoals = rand()%51;
+		
+		(s + i)->familyname = (char *)malloc(5 * sizeof(char));
+		generateName((s + i)->familyname, 5);
+		
+		printInfo(s, i);			
+	}
+	int TotalAge=0;
+	int AverageAge=0;
+	printf("\n---------------\n");
+	for (int i = 0; i < Numberofsoccerplayers; i++)
+	{
+		TotalAge+=(s+i)->age;
+	}
+	AverageAge=TotalAge/Numberofsoccerplayers;
+	printf("Average age of soccerplayers: %d\n", AverageAge);
+	printf("Soccerplaeyrs of age under 25: \n");
+	for (int i = 0; i < Numberofsoccerplayers; i++)
+	{
+		if(((s+i)->age)<25)
+		    printInfo(s, i);
+	}
+	
+	return 0;
+}
+
+
+void generateName(char *name, int length)
+{
+	if (length == 0)
+		length = 1 + rand() % 6;
+
+	for (int i = 0; i < length; i++)
+	{
+		if (i == 0)
+			*(name + i) = (char)(65 + rand() % 24);
+		else
+			*(name + i) = (char)(97 + rand() % 24);
+	}
+	*(name + length) = '\0';
+}
+
+void printInfo(soccerplayers *s, int i)
+{
+	printf("#%d %s \n", i + 1, (s+i)->familyname);		
+
+	printf(" --> Age: %d\n", (s+i)->age);
+
+	printf(" --> Number of games: %d\n", (s+i)->numberofgames);
+	
+	printf(" --> Number of goals: %d\n", (s+i)->numberofgoals);
+}
+
